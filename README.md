@@ -23,6 +23,11 @@ A base de dados real utilizada contém transações feitas por portadores de car
 - 🌐 [LinkedIn](https://www.linkedin.com/in/isadora-ferrao/)
 - 📧 [GitHub](https://github.com/IsadoraFerrao)
 
+### 🏫 Instituição
+- 🌐 [DIO](https://www.dio.me/)
+- 🌐 [Bootcamp Bradesco - GenAI, Dados & Cyber](https://web.dio.me/track/bradesco-dados-ciberseguranca-genai)
+- 📧 [LinkedIn](https://www.linkedin.com/school/dio-me/)
+
 ---
 
 ## 📈 Impacto de Negócio & Objetivos
