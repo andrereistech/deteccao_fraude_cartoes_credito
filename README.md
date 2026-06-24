@@ -168,23 +168,15 @@ Dado o forte desbalanceamento, a acurácia é descartada. Focamos nosso esforço
 
 - Curvas ROC (AUC) e Precision-Recall:
 
-
-
 ````Python
-
-
 
 from sklearn.metrics import roc_curve, roc_auc_score, precision_recall_curve
 
 import matplotlib.pyplot as plt
 
-
-
 # Obtendo probabilidades da classe positiva
 
 y_probs = model.predict_proba(X_test)[:, 1]
-
-
 
 # Curva ROC
 
@@ -204,8 +196,6 @@ plt.legend()
 
 plt.show()
 
-
-
 # Curva Precision-Recall
 
 precision, recall, _ = precision_recall_curve(y_test, y_probs)
@@ -222,63 +212,35 @@ plt.ylabel("Precision")
 
 plt.show()
 
-
-
 ````
-
-
 
 ## 6. Técnicas de Balanceamento de Dados
 
-
-
 Para evitar que os algoritmos sejam enviesados pela classe majoritária, aplicamos duas técnicas clássicas de reamostragem:
-
-
 
 - A. Random Undersampling
 
-
-
 Reduz o número de transações legítimas para se igualar à quantidade de fraudes existentes.
 
-
-
 ```Python
-
-
 
 fraudes = df[df["Class"] == 1]
 
 nao_fraudes = df[df["Class"] == 0].sample(len(fraudes), random_state=42)
 
-
-
 df_under = pd.concat([fraudes, nao_fraudes])
-
-
 
 ```
 
-
-
 - B. SMOTE (Synthetic Minority Over-sampling Technique)Gera dados artificiais sintéticos da classe minoritária (fraudes) baseando-se em vizinhos mais próximos ($k$-NN).
-
-
 
 ```Python
 
-
-
 from imblearn.over_sampling import SMOTE
-
-
 
 smote = SMOTE()
 
 X_res, y_res = smote.fit_resample(X, y)
-
-
 
 ```
 
@@ -288,11 +250,7 @@ Podemos também delegar ao próprio algoritmo o ajuste dos pesos associados a ca
 
 ```Python
 
-
-
 from sklearn.ensemble import RandomForestClassifier
-
-
 
 rf = RandomForestClassifier(
 
@@ -312,31 +270,17 @@ y_pred_rf = rf.predict(X_test)
 
 print(classification_report(y_test, y_pred_rf))
 
-
-
 ```
-
-
 
 ## 7. Técnicas Avançadas: Pipelines e Ajuste de Threshold
 
-
-
 Uso de Pipelines do Scikit-Learn
-
-
 
 Garante o encapsulamento do pré-processamento evitando vazamento de dados (data leakage).
 
-
-
 ```Python
 
-
-
 from sklearn.pipeline import Pipeline
-
-
 
 pipeline = Pipeline([
 
@@ -350,53 +294,29 @@ pipeline.fit(X_train, y_train)
 
 y_pred_pipeline = pipeline.predict(X_test)
 
-
-
 ```
-
-
 
 Customização do Limiar de Decisão (Threshold Tuning)
 
-
-
 Por padrão, classificadores usam $0.5$ como ponto de corte. Reduzir esse valor nos ajuda a capturar mais fraudes ocultas (aumentando o Recall).
 
-
-
 ```Python
-
-
 
 threshold = 0.3
 
 y_pred_custom = (y_probs > threshold).astype(int)
 
-
-
 print(classification_report(y_test, y_pred_custom))
-
-
 
 ```
 
-
-
 ## 8. Modelo Avançado - XGBoostO
-
-
 
 XGBoost (Extreme Gradient Boosting) destaca-se pelo alto poder preditivo através do aprendizado sequencial de árvores de decisão fracas.
 
-
-
 ```Python
 
-
-
 from xgboost import XGBClassifier
-
-
 
 xgb = XGBClassifier(
 
@@ -408,31 +328,19 @@ xgb = XGBClassifier(
 
 )
 
-
-
 xgb.fit(X_train, y_train)
 
 y_pred_xgb = xgb.predict(X_test)
 
-
-
 print(classification_report(y_test, y_pred_xgb))
-
-
 
 ```
 
 ## 9. Importância das Variáveis (Feature Importance)
 
-
-
 Mapeamento estrutural interno para visualizar quais componentes latentes do PCA ou transformações de valores carregam maior impacto na segregação das classes.
 
-
-
 ```Python
-
-
 
 importances = xgb.feature_importances_
 
