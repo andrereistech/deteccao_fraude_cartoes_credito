@@ -54,11 +54,15 @@ Em sistemas financeiros, um modelo ingénuo focado apenas em Acurácia falharia 
 
 ## 🛠️ Como Executar o Projeto
 
-```bash
-# Clonar o repositório
-git clone [https://github.com/andrereistech/seu-repositorio.git](https://github.com/andrereistech/seu-repositorio.git)
 
+# Clonar o repositório
+
+```python
+git clone [https://github.com/andrereistech/seu-repositorio.git](https://github.com/andrereistech/seu-repositorio.git)
+```
 # Instalar as dependências necessárias
+
+```python
 pip install pandas numpy scikit-learn imbalanced-learn xgboost matplotlib shap
 
 ```
@@ -101,8 +105,7 @@ df["Class"].value_counts(normalize=True)
 > Classe 0 (Legítima): $99.82\%$
 
 > Classe 1 (Fraudulenta): $0.17\%$
-
----
+> 
 
 > [!Tip]
 > Se criarmos um modelo ingênuo que classifique 100% das transações como legítimas (Classe 0), sua acurácia será de $99.82\%$, porém o modelo será completamente inútil para o negócio porque não detectará nenhuma fraude.
@@ -119,17 +122,29 @@ from sklearn.preprocessing import StandardScaler
 
 from sklearn.model_selection import train_test_split
 
-# 1. Transformação Logarítmica para suavizar distribuições muito distorcidas
+```
+
+### a. Transformação Logarítmica para suavizar distribuições muito distorcidas
+
+```python
 
 df["Amount_log"] = np.log1p(df["Amount"])
 
-# 2. Padronização da escala da variável Amount
+```
+
+### b. Padronização da escala da variável Amount
+
+```python
 
 scaler = StandardScaler()
 
 df["Amount_Scaled"] = scaler.fit_transform(df[["Amount"]])
 
-# 3. Divisão Estratificada em treino e teste (mantendo a proporção de fraudes nas duas frações)
+```
+
+### c. Divisão Estratificada em treino e teste (mantendo a proporção de fraudes nas duas frações)
+
+```python
 
 X = df.drop("Class", axis=1)
 
@@ -155,20 +170,26 @@ from sklearn.linear_model import LogisticRegression
 
 from sklearn.metrics import classification_report
 
-# Instanciação e ajuste do modelo
+````
 
+### Instanciação e ajuste do modelo
+
+```python
 model = LogisticRegression(max_iter=1000)
 
 model.fit(X_train, y_train)
 
-# Predição nos dados de validação/teste
+```
+
+### Predição nos dados de validação/teste
+
+```python
 
 y_pred = model.predict(X_test)
 
 print(classification_report(y_test, y_pred))
 
 ```
-
 ---
 
 ## 5. Métricas de Avaliação de Modelos
@@ -188,13 +209,19 @@ Dado o forte desbalanceamento, a acurácia é descartada. Focamos nosso esforço
 from sklearn.metrics import roc_curve, roc_auc_score, precision_recall_curve
 
 import matplotlib.pyplot as plt
+````
 
-# Obtendo probabilidades da classe positiva
+
+### Obtendo probabilidades da classe positiva
+```python
 
 y_probs = model.predict_proba(X_test)[:, 1]
 
-# Curva ROC
+```
 
+### Curva ROC
+
+```python
 fpr, tpr, _ = roc_curve(y_test, y_probs)
 
 plt.figure(figsize=(6,4))
@@ -210,9 +237,11 @@ plt.ylabel("True Positive Rate")
 plt.legend()
 
 plt.show()
+````
 
-# Curva Precision-Recall
+### Curva Precision-Recall
 
+```python
 precision, recall, _ = precision_recall_curve(y_test, y_probs)
 
 plt.figure(figsize=(6,4))
@@ -227,7 +256,7 @@ plt.ylabel("Precision")
 
 plt.show()
 
-`````
+```
 
 ---
 
@@ -428,13 +457,21 @@ A biblioteca SHAP (SHapley Additive exPlanations) quebra a característica de "c
 
 import shap
 
-# Computando explicações locais utilizando a teoria dos jogos de Shapley
+```
+
+### Computando explicações locais utilizando a teoria dos jogos de Shapley
+
+```python
 
 explainer = shap.Explainer(xgb)
 
 shap_values = explainer(X_test[:100])
 
-# Plot estruturado de impacto de barra
+```
+
+### Plot estruturado de impacto de barra
+
+```python
 
 shap.plots.bar(shap_values)
 
