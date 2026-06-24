@@ -5,7 +5,7 @@
 ![XGBoost](https://img.shields.io/badge/XGBoost-Highly%20Optimized-green.svg)
 ![SHAP](https://img.shields.io/badge/XAI-SHAP%20Explainer-red.svg)
 
-Este repositório apresenta uma solução fim-a-fim de Engenharia de Dados e Machine Learning para identificar transações fraudulentas em cartões de crédito. O projeto aborda o desafio clássico de conjuntos de dados massivos e severamente desbalanceados, comparando técnicas estatísticas de reamostragem e modelos baseados em Gradient Boosting.
+Este repositório consolida o desenvolvimento de uma infraestrutura completa de Engenharia de Dados e Machine Learning para a detecção precoce de fraudes financeiras, visando otimizar a precisão operacional e mitigar o impacto de falsos positivos. A solução aborda o desafio clássico de trabalhar com conjuntos de dados massivos e severamente desbalanceados, avaliando e comparando o desempenho de técnicas estatísticas de reamostragem frente a modelos preditivos avançados baseados em `Gradient Boosting`.
 
 A base de dados real utilizada contém transações feitas por portadores de cartões europeus e está disponível publicamente em: [GoogleApis (TensorFlow Data)](https://storage.googleapis.com/download.tensorflow.org/data/creditcard.csv).
 
@@ -56,11 +56,12 @@ git clone [https://github.com/andrereistech/seu-repositorio.git](https://github.
 # Instalar as dependências necessárias
 pip install pandas numpy scikit-learn imbalanced-learn xgboost matplotlib shap
 
+```
 ---
 
 ## 1. Visão Geral do Problema e Dados
 
-Em problemas de detecção de fraude, o volume de transações legítimas supera drasticamente o volume de transações fraudulentas[cite: 2, 4]. Os dados fornecidos possuem transformações PCA (Componentes Principais) aplicadas sobre as features originais por motivos de confidencialidade (representadas por $V_1, V_2, \dots, V_{28}$), restando apenas as colunas `Time` e `Amount` com seus valores originais intactos[cite: 2, 4].
+Em problemas de detecção de fraude, o volume de transações legítimas supera drasticamente o volume de transações fraudulentas. Os dados fornecidos possuem transformações PCA (Componentes Principais) aplicadas sobre as features originais por motivos de confidencialidade (representadas por $V_1, V_2, \dots, V_{28}$), restando apenas as colunas `Time` e `Amount` com seus valores originais intactos.
 
 ### Carregamento inicial do Dataset:
 
@@ -78,9 +79,11 @@ df.head(10)
 
 ```
 
+---
+
 ## 2. Análise do Desbalanceamento da Classe Target
 
-A distribuição da variável Class revela o tamanho do desafio: as fraudes constituem uma fração minúscula de todo o conjunto de dados.
+### A distribuição da variável Class revela o tamanho do desafio: as fraudes constituem uma fração minúscula de todo o conjunto de dados.
 
 ```python
 
@@ -88,13 +91,18 @@ df["Class"].value_counts(normalize=True)
 
 ```
 
-Distribuição Percentual aproximada:
+### Distribuição Percentual aproximada:
 
-Classe 0 (Legítima): $99.82\%$
+> Classe 0 (Legítima): $99.82\%$
 
-Classe 1 (Fraudulenta): $0.17\%$
+> Classe 1 (Fraudulenta): $0.17\%$
 
-⚠️ Aviso: Se criarmos um modelo ingênuo que classifique 100% das transações como legítimas (Classe 0), sua acurácia será de $99.82\%$, porém o modelo será completamente inútil para o negócio porque não detectará nenhuma fraude.
+---
+
+> [!Tip]
+> Se criarmos um modelo ingênuo que classifique 100% das transações como legítimas (Classe 0), sua acurácia será de $99.82\%$, porém o modelo será completamente inútil para o negócio porque não detectará nenhuma fraude.
+
+---
 
 ## 3. Feature Engineering e Pré-processamentoPara mitigar a variância e a diferença de escalas nas colunas originais (Amount), aplicamos técnicas de transformação logarítmica e padronização (Z-score normalization).
 
@@ -130,6 +138,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 ```
 
+---
+
 ## 4. Modelo de Linha de Base (Baseline) - Regressão Logística
 
 Como primeiro experimento, treinamos um estimador linear simples de Regressão Logística para servir como referencial de performance.
@@ -154,11 +164,11 @@ print(classification_report(y_test, y_pred))
 
 ```
 
+---
+
 ## 5. Métricas de Avaliação de Modelos
 
 Dado o forte desbalanceamento, a acurácia é descartada. Focamos nosso esforço analítico nas seguintes ferramentas:
-
-
 
 - Recall (Sensibilidade): Mede a proporção de fraudes reais que o modelo conseguiu identificar. É a métrica de negócio mais crítica (minimiza Falsos Negativos).
 
@@ -212,13 +222,15 @@ plt.ylabel("Precision")
 
 plt.show()
 
-````
+`````
+
+---
 
 ## 6. Técnicas de Balanceamento de Dados
 
 Para evitar que os algoritmos sejam enviesados pela classe majoritária, aplicamos duas técnicas clássicas de reamostragem:
 
-- A. Random Undersampling
+### - A. Random Undersampling
 
 Reduz o número de transações legítimas para se igualar à quantidade de fraudes existentes.
 
@@ -232,7 +244,7 @@ df_under = pd.concat([fraudes, nao_fraudes])
 
 ```
 
-- B. SMOTE (Synthetic Minority Over-sampling Technique)Gera dados artificiais sintéticos da classe minoritária (fraudes) baseando-se em vizinhos mais próximos ($k$-NN).
+### - B. SMOTE (Synthetic Minority Over-sampling Technique)Gera dados artificiais sintéticos da classe minoritária (fraudes) baseando-se em vizinhos mais próximos ($k$-NN).
 
 ```Python
 
@@ -244,7 +256,7 @@ X_res, y_res = smote.fit_resample(X, y)
 
 ```
 
-- C. Abordagem por Pesos Intrinsecamente Balanceados (Random Forest)
+### - C. Abordagem por Pesos Intrinsecamente Balanceados (Random Forest)
 
 Podemos também delegar ao próprio algoritmo o ajuste dos pesos associados a cada classe. 
 
@@ -272,9 +284,11 @@ print(classification_report(y_test, y_pred_rf))
 
 ```
 
+---
+
 ## 7. Técnicas Avançadas: Pipelines e Ajuste de Threshold
 
-Uso de Pipelines do Scikit-Learn
+### Uso de Pipelines do Scikit-Learn
 
 Garante o encapsulamento do pré-processamento evitando vazamento de dados (data leakage).
 
@@ -296,7 +310,7 @@ y_pred_pipeline = pipeline.predict(X_test)
 
 ```
 
-Customização do Limiar de Decisão (Threshold Tuning)
+### Customização do Limiar de Decisão (Threshold Tuning)
 
 Por padrão, classificadores usam $0.5$ como ponto de corte. Reduzir esse valor nos ajuda a capturar mais fraudes ocultas (aumentando o Recall).
 
@@ -309,6 +323,8 @@ y_pred_custom = (y_probs > threshold).astype(int)
 print(classification_report(y_test, y_pred_custom))
 
 ```
+
+---
 
 ## 8. Modelo Avançado - XGBoostO
 
@@ -336,6 +352,8 @@ print(classification_report(y_test, y_pred_xgb))
 
 ```
 
+---
+
 ## 9. Importância das Variáveis (Feature Importance)
 
 Mapeamento estrutural interno para visualizar quais componentes latentes do PCA ou transformações de valores carregam maior impacto na segregação das classes.
@@ -357,6 +375,8 @@ plt.ylabel("Ganho de Importância Relative")
 plt.show()
 
 ```
+
+---
 
 ## 10. Otimização de Hiperparâmetros (GridSearchCV)
 
@@ -392,6 +412,8 @@ print("Melhores Hiperparâmetros Identificados:", grid.best_params_)
 
 ```
 
+---
+
 ## 11. Explicabilidade do Modelo com SHAP
 
 A biblioteca SHAP (SHapley Additive exPlanations) quebra a característica de "caixa preta" do modelo baseado em árvores complexas, atribuindo a cada variável um valor de contribuição exato para a decisão final de score da transação.
@@ -412,5 +434,8 @@ shap_values = explainer(X_test[:100])
 shap.plots.bar(shap_values)
 
 ```
+
+---
+
 > [!TIP]
 > Sinta-se livre para clonar este projeto, criar novas colunas derivadas e testar novas arquiteturas de redes neurais profundas!
