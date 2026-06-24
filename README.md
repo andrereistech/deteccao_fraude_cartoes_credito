@@ -413,5 +413,4 @@ shap.plots.bar(shap_values)
 
 ```
 > [!TIP]
-> Na pasta [`examples/`](./examples/) você encontra referências de implementação para cada etapa deste desafio.
-💡 Dica: Sinta-se livre para clonar este projeto, criar novas colunas derivadas e testar novas arquiteturas de redes neurais profundas!
+> Sinta-se livre para clonar este projeto, criar novas colunas derivadas e testar novas arquiteturas de redes neurais profundas!
