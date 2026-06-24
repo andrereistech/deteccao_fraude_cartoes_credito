@@ -14,7 +14,7 @@ A base de dados real utilizada contém transações feitas por portadores de car
 ## 👥 Autoria e Créditos
 
 ### 👨‍💻 Desenvolvedor
-- **Aluno:** André Reis
+- **André Reis**
 - 🌐 [LinkedIn](https://www.linkedin.com/in/andre-reis-tech)
 - 📧 [GitHub](https://github.com/andrereistech)
 
