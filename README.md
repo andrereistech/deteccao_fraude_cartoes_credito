@@ -344,8 +344,6 @@ Mapeamento estrutural interno para visualizar quais componentes latentes do PCA 
 
 importances = xgb.feature_importances_
 
-
-
 plt.figure(figsize=(10, 5))
 
 plt.bar(range(len(importances)), importances)
@@ -358,27 +356,15 @@ plt.ylabel("Ganho de Importância Relative")
 
 plt.show()
 
-
-
 ```
-
-
 
 ## 10. Otimização de Hiperparâmetros (GridSearchCV)
 
-
-
 Varredura sistemática no espaço amostral de hiperparâmetros com o objetivo explícito de maximizar o Recall.
-
-
 
 ```Python
 
-
-
 from sklearn.model_selection import GridSearchCV
-
-
 
 param_grid = {
 
@@ -387,8 +373,6 @@ param_grid = {
     "n_estimators": [50, 100]
 
 }
-
-
 
 grid = GridSearchCV(
 
@@ -402,35 +386,20 @@ grid = GridSearchCV(
 
 )
 
-
-
 grid.fit(X_train, y_train)
 
 print("Melhores Hiperparâmetros Identificados:", grid.best_params_)
 
-
-
 ```
 
-
-
 ## 11. Explicabilidade do Modelo com SHAP
-
-
 
 A biblioteca SHAP (SHapley Additive exPlanations) quebra a característica de "caixa preta" do modelo baseado em árvores complexas, atribuindo a cada variável um valor de contribuição exato para a decisão final de score da transação.
 
 
-
-
-
 ```Python
 
-
-
 import shap
-
-
 
 # Computando explicações locais utilizando a teoria dos jogos de Shapley
 
@@ -438,16 +407,11 @@ explainer = shap.Explainer(xgb)
 
 shap_values = explainer(X_test[:100])
 
-
-
 # Plot estruturado de impacto de barra
 
 shap.plots.bar(shap_values)
 
-
-
 ```
-
-
-
+> [!TIP]
+> Na pasta [`examples/`](./examples/) você encontra referências de implementação para cada etapa deste desafio.
 💡 Dica: Sinta-se livre para clonar este projeto, criar novas colunas derivadas e testar novas arquiteturas de redes neurais profundas!
