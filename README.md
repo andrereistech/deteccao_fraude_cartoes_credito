@@ -4,6 +4,8 @@
 ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Latest-orange.svg)
 ![XGBoost](https://img.shields.io/badge/XGBoost-Highly%20Optimized-green.svg)
 ![SHAP](https://img.shields.io/badge/XAI-SHAP%20Explainer-red.svg)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1_8Mjqprmhx2Xj-B2cM9MYgFc4niacO0g?usp=sharing)
+
 
 Este repositório consolida o desenvolvimento de uma infraestrutura completa de Engenharia de Dados e Machine Learning para a detecção precoce de fraudes financeiras, visando otimizar a precisão operacional e mitigar o impacto de falsos positivos. A solução aborda o desafio clássico de trabalhar com conjuntos de dados massivos e severamente desbalanceados, avaliando e comparando o desempenho de técnicas estatísticas de reamostragem frente a modelos preditivos avançados baseados em `Gradient Boosting`.
 
@@ -52,23 +54,66 @@ Em sistemas financeiros, um modelo ingénuo focado apenas em Acurácia falharia 
 
 ---
 
-## 🛠️ Como Executar o Projeto
+## 🚀 Guia Rápido: Como Executar Este Projeto
 
+Se você quer rodar este projeto na sua máquina, siga estes dois passos simples utilizando o seu terminal (Prompt de Comando ou Bash).
 
-# Clonar o repositório
+---
+
+### 📌 Passo 1: Clonar o Repositório
+
+Clonar significa fazer uma cópia exata de todo o código deste projeto do GitHub para o seu computador.
+
+1.1 Abra o terminal na pasta onde deseja salvar o projeto
+
+1.2 Copie e cole o comando abaixo e aperte **Enter**
 
 ```python
+
 git clone [https://github.com/andrereistech/seu-repositorio.git](https://github.com/andrereistech/seu-repositorio.git)
+
 ```
-# Instalar as dependências necessárias
+
+1.3 Entre na pasta que foi criada:
 
 ```python
+
+cd seu-repositorio
+
+```
+
+### 📦 Passo 2: Instalar as Bibliotecas Necessárias
+
+Para o código funcionar, você precisa instalar as ferramentas de Ciência de Dados e Machine Learning que utilizamos. O pip install baixa e instala todas elas de uma vez só.
+
+Copie e cole este comando no seu terminal e aperte Enter:
+
+```python
+
 pip install pandas numpy scikit-learn imbalanced-learn xgboost matplotlib shap
 
 ```
+
+🧰 O que cada ferramenta faz?
+
+- **pandas & numpy**: Limpeza, manipulação e estruturação dos dados.
+
+- **scikit-learn**: Criação do modelo baseline e divisão dos dados de treino e teste.
+
+- **imbalanced-learn**: Aplicação do método SMOTE para balancear os dados.
+
+- **xgboost**: O modelo avançado de inteligência artificial (Gradient Boosting).
+
+- **matplotlib**: Geração dos gráficos de desempenho e curvas ROC.
+
+- **shap**: Explicabilidade do modelo (para entender as decisões da IA).
+
+> [!Tip]
+> Pronto! Agora o seu computador está totalmente configurado para rodar os notebooks e scripts do projeto. 🏁
+
 ---
 
-## 1. Visão Geral do Problema e Dados
+### 1. Visão Geral do Problema e Dados
 
 Em problemas de detecção de fraude, o volume de transações legítimas supera drasticamente o volume de transações fraudulentas. Os dados fornecidos possuem transformações PCA (Componentes Principais) aplicadas sobre as features originais por motivos de confidencialidade (representadas por $V_1, V_2, \dots, V_{28}$), restando apenas as colunas `Time` e `Amount` com seus valores originais intactos.
 
