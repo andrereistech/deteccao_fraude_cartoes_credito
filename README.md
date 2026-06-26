@@ -4,8 +4,7 @@
 ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Latest-orange.svg)
 ![XGBoost](https://img.shields.io/badge/XGBoost-Highly%20Optimized-green.svg)
 ![SHAP](https://img.shields.io/badge/XAI-SHAP%20Explainer-red.svg)
-[![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1_8Mjqprmhx2Xj-B2cM9MYgFc4niacO0g?usp=sharing)
-
+[![Abrir no Colab](https://img.shields.io/badge/Abrir%20no-Colab-F9AB00?logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/1_8Mjqprmhx2Xj-B2cM9MYgFc4niacO0g?usp=sharing)
 
 Este repositório consolida o desenvolvimento de uma infraestrutura completa de Engenharia de Dados e Machine Learning para a detecção precoce de fraudes financeiras, visando otimizar a precisão operacional e mitigar o impacto de falsos positivos. A solução aborda o desafio clássico de trabalhar com conjuntos de dados massivos e severamente desbalanceados, avaliando e comparando o desempenho de técnicas estatísticas de reamostragem frente a modelos preditivos avançados baseados em `Gradient Boosting`.
 
@@ -525,5 +524,7 @@ shap.plots.bar(shap_values)
 ---
 
 > [!TIP]
+> 
 > Sinta-se livre para clonar este projeto, criar novas colunas derivadas e testar novas arquiteturas de redes neurais profundas!
-> [![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1_8Mjqprmhx2Xj-B2cM9MYgFc4niacO0g?usp=sharing)
+>
+> [![Abrir no Colab](https://img.shields.io/badge/Abrir%20no-Colab-F9AB00?logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/1_8Mjqprmhx2Xj-B2cM9MYgFc4niacO0g?usp=sharing)
